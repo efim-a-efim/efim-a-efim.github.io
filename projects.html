@@ -1,0 +1,13 @@
+---
+layout: page
+title: Projects
+group: navigation
+header: Project links
+permalink: /projects
+---
+{% include JB/setup %}
+
+<dl>
+  {% assign projects_list = site.projects %}  
+  {% include JB/projects_list %}
+</dl>

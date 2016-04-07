@@ -1,0 +1,16 @@
+<div class="page-header">
+  <h1>
+    {{ page.title }}
+      {% if page.sourcelink %}
+        <small>View&nbsp;<a href="{{ page.sourcelink }}">sources</a></small>
+      {% endif %}
+      {% if page.downloadlink %}
+        %nbsp;or&nbsp;<small><a href="{{ page.downloadlink }}">download</a></small>
+      {% endif %}
+  </h1>
+</div>
+<div class="row">
+<div class="span12">
+      {{ content }}
+</div>
+</div>
