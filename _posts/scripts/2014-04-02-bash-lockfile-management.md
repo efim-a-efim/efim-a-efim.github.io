@@ -12,4 +12,4 @@ tags :
 
 Sometimes you need to lock a generic resource in one place and check it in another place. Below is my version of a lock file management function - in fact it's a mutex.  
 
-<div style="text-shadow:none;"><script src="https://gist.github.com/{{ site.author.github }}/9931244.js"> </script></div>
+<div style="text-shadow:none;"><script src="https://gist.github.com/{{ site.author.github }}/9931244.js"></script></div>

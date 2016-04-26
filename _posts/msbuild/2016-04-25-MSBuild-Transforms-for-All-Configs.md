@@ -42,30 +42,11 @@ Now we need to add our transforms to project files and tell MSBuild that they ar
 
 Open your project(s) (`.csproj`, `.vbproj`, etc.) in text editor. Find your config file record, it looks like this:
 
-```xml
-<Content Include="Web.config">
-  <SubType>Designer</SubType>
-</Content>
-```
+<div style="text-shadow:none;"><script src="https://gist.github.com/{{ site.author.github }}/817a4f67b54abea1df21410611286ce5.js?file=sample-config-entry.csproj"></script></div>
 
 You should replace it with this:
 
-```xml
-<Content Include="Web.config">
-  <SubType>Designer</SubType>
-  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-</Content>
-<None Include="Web.CI.config">
-  <DependentUpon>Web.config</DependentUpon>
-  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-  <SubType>Designer</SubType>
-</None>
-<None Include="Web.Production.config">
-  <DependentUpon>Web.config</DependentUpon>
-  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-  <SubType>Designer</SubType>
-</None>
-```
+<div style="text-shadow:none;"><script src="https://gist.github.com/{{ site.author.github }}/817a4f67b54abea1df21410611286ce5.js?file=sample-config-entry-modified.csproj"></script></div>
 
 You see, we've set some additional properties. To be short: we made config file to copy to output folder after build and denied copying for transforms.
 
@@ -82,130 +63,10 @@ Here's a sample MSBuild XML that does the following:
 
 Place this XML in your project file, preferrably after PropertyGroup definitions in file's start.
 
-```xml
-  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.Tasks.dll" />
-  <ItemDefinitionGroup>
-    <_FilesToTransform>
-      <IsAppConfig>false</IsAppConfig>
-    </_FilesToTransform>
-  </ItemDefinitionGroup>
-
-  <Target Name="CopyTransformedConfigs" DependsOnTargets="DiscoverFilesToTransform;TransformAllFiles;" AfterTargets="TransformAllFiles;PipelinePreDeployCopyAllFilesToOneFolder" BeforeTargets="OctoPack">
-    <Copy 
-        SourceFiles="@(_FilesToTransformNotAppConfig->'$(OutDir)%(RelativeDir)%(Filename)%(Extension)')"
-        DestinationFiles="@(_FilesToTransformNotAppConfig->'$(PackageTempRootDir)\PackageTmp\%(RelativeDir)%(Filename)%(Extension)')"
-        />
-    <Copy 
-        SourceFiles="@(_FilesToReplace->'$(OutDir)%(DependentUpon)')"
-        DestinationFiles="@(_FilesToReplace->'$(PackageTempRootDir)\PackageTmp\%(DependentUpon)')"
-        />
-  </Target>
-  
-  <Target Name="TransformAllFiles" DependsOnTargets="DiscoverFilesToTransform;" AfterTargets="Build;_CopyAppConfigFile" BeforeTargets="OctoPack">
-    <!-- Now we have the item list _FilesToTransformNotAppConfig and _AppConfigToTransform item lists -->
-    <!-- Transform the app.config file -->    
-    <ItemGroup>
-      <_AppConfigTarget Include="@(AppConfigWithTargetPath->'$(OutDir)%(TargetPath)')" />
-    </ItemGroup>
-    
-    <PropertyGroup>
-      <_AppConfigDest>@(_AppConfigTarget->'%(FullPath)')</_AppConfigDest>
-    </PropertyGroup>
-
-    <MakeDir Directories="@(_FilesToTransformNotAppConfig->'$(OutDir)%(RelativeDir)')"
-             Condition="Exists('%(RelativeDir)%(Filename).$(Configuration)%(Extension)')"/>
-    <MakeDir Directories="@(_FilesToReplace->'$(OutDir)%(RelativeDir)')"
-             Condition="Exists('%(RelativeDir)%(Filename).$(Configuration)%(Extension)')"/>
-
-    
-    <TransformXml Source="@(_AppConfigToTransform->'%(FullPath)')"
-                  Transform="%(_Transform)"
-                  Destination="$(_AppConfigDest)"
-                  Condition=" Exists('%(RelativeDir)%(Filename).$(Configuration)%(Extension)') " />
-
-    
-    <TransformXml Source="@(_FilesToTransformNotAppConfig->'%(FullPath)')"
-                  Transform="%(_Transform)"
-                  Destination="@(_FilesToTransformNotAppConfig->'$(OutDir)%(RelativeDir)%(Filename)%(Extension)')"
-                  Condition=" Exists('%(RelativeDir)%(Filename).$(Configuration)%(Extension)') " />
-
-    <Copy 
-        SourceFiles="@(_FilesToReplace)"
-	DestinationFiles="@(_FilesToReplace->'$(OutDir)%(DependentUpon)')" />
-  </Target>
-  
-  <Target Name="DiscoverFilesToTransform">
-    <!-- 
-    This will look through items list: None & Content for those
-    with Metadata <TransformOnBuild>True</TransformOnBuild>
-    -->
-    <ItemGroup>
-      <_Transforms Include="@(None);@(Content);@(Resource);@(EmbeddedResource)"
-                         Condition="$([System.String]::Copy('%(Filename)%(Extension)').EndsWith('.$(Configuration)%(Extension)')) AND ( '%(Extension)'=='.xml' OR '%(Extension)'=='.config' )"/>
-     <_FilesToTransform Include="@(_Transforms->'%(DependentUpon)')">
-       <_Transform>%(_Transforms.Identity)</_Transform>
-     </_FilesToTransform>
-     <_FilesToReplace Exclude="@(_Transforms)" Include="@(None);@(Content);@(Resource);@(EmbeddedResource)" Condition="$([System.String]::Copy('%(Filename)%(Extension)').EndsWith('.$(Configuration)%(Extension)'))" />
-    </ItemGroup>    
-
-    <PropertyGroup>
-      <_AppConfigFullPath>@(AppConfigWithTargetPath->'%(RootDir)%(Directory)%(Filename)%(Extension)')</_AppConfigFullPath>
-    </PropertyGroup>
-
-    <!-- Now look to see if any of these are the app.config file -->
-    <ItemGroup>
-      <_FilesToTransform Condition=" '%(FullPath)'=='$(_AppConfigFullPath)'">
-        <IsAppConfig>true</IsAppConfig>
-      </_FilesToTransform>
-    </ItemGroup>
-          
-    <ItemGroup>
-      <_FilesToTransformNotAppConfig Include="@(_FilesToTransform)"
-                                     Condition=" '%(IsAppConfig)'!='true'"/>
-      
-      <_AppConfigToTransform  Include="@(_FilesToTransform)"
-                              Condition=" '%(IsAppConfig)'=='true'"/>
-    </ItemGroup>
-
-    <Message Text="FilesToTransform: %(_FilesToTransform.Identity)" Importance="High"/>
-    <Message Text="FilesToReplace: %(_FilesToReplace.Identity) %(_FilesTmp.DependentUpon)" Importance="High"/>
-  </Target>
-
-  <PropertyGroup>
-    <BuildDependsOn>
-      $(BuildDependsOn);
-      TransformAllFiles
-    </BuildDependsOn>
-  </PropertyGroup>
-```
+<div style="text-shadow:none;"><script src="https://gist.github.com/{{ site.author.github }}/817a4f67b54abea1df21410611286ce5.js?file=Transform-Application.csproj"></script></div>
 
 For Web projects, use the following:
 
-```xml
-  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v10.0\Web\Microsoft.Web.Publishing.Tasks.dll" />
-  <Target Name="TransformAllFiles" BeforeTargets="OctoPack;">
-    <ItemGroup>
-      <_Transforms Include="@(None);@(Content);@(Resource);@(EmbeddedResource)" Condition="$([System.String]::Copy('%(Filename)%(Extension)').EndsWith('.$(Configuration)%(Extension)')) AND ( '%(Extension)'=='.xml' OR '%(Extension)'=='.config' )" />
-      <_FilesToTransform Include="@(_Transforms->'%(DependentUpon)')">
-        <_Transform>%(_Transforms.Identity)</_Transform>
-      </_FilesToTransform>
-      <_FilesToReplace Exclude="@(_Transforms)" Include="@(None);@(Content);@(Resource);@(EmbeddedResource)" Condition="$([System.String]::Copy('%(Filename)%(Extension)').EndsWith('.$(Configuration)%(Extension)'))" />
-    </ItemGroup>
-    <Message Text="FilesToTransform: %(_FilesToTransform.Identity)" Importance="High" />
-    <Message Text="FilesToReplace: %(_FilesToReplace.Identity) %(_FilesTmp.DependentUpon)" Importance="High" />
-
-    <Copy SourceFiles="@(_FilesToTransform)" DestinationFiles="@(_FilesToTransform->'%(RelativeDir)%(Filename).Base%(Extension)')"  Condition="Exists('%(RelativeDir)%(Filename).$(Configuration)%(Extension)')" />
-    <TransformXml Source="@(_FilesToTransform->'%(RelativeDir)%(Filename).Base%(Extension)')" Transform="%(_Transform)" Destination="@(_FilesToTransform)" Condition=" Exists('%(RelativeDir)%(Filename).$(Configuration)%(Extension)') " />
-
-    <Copy SourceFiles="@(_FilesToReplace)" DestinationFiles="@(_FilesToReplace->'%(DependentUpon)')" />
-  </Target>
-
-  <PropertyGroup>
-    <BuildDependsOn>
-      $(BuildDependsOn);
-      TransformAllFiles
-    </BuildDependsOn>
-  </PropertyGroup>
-```
+<div style="text-shadow:none;"><script src="https://gist.github.com/{{ site.author.github }}/817a4f67b54abea1df21410611286ce5.js?file=Transform-Web.csproj"></script></div>
 
 It has a side effect: while building, it replaces your `Web.config` files with transformed ones (though you can find original content in `Web.Base.config`). Originally, transforms run in MSBuild only when you publish the project and this problem doesn't appear. 
