@@ -1,7 +1,7 @@
 ---
 layout: project
 title: "Octopus PowerShell API"
-description: "<a href="http://octopus.com">Octopus</a> PowerShell API"
+description: "Octopus Deploy PowerShell API"
 sourcelink: https://github.com/efim-a-efim/OctopusAPI
 ---
 {% include JB/setup %}
