@@ -2,7 +2,8 @@
 layout: project
 title: "AWS EFS mount in Docker"
 description: "Docker image to mount AWS Elastic File System"
-sourcelink: https://hub.docker.com/r/deadroot/docker-efs-mount/
+sourcelink: https://github.com/efim-a-efim/docker-efs-mount
+dockerhub: deadroot/docker-efs-mount
 ---
 {% include JB/setup %}
 
@@ -14,12 +15,14 @@ After mounting can be safely removed because all NFS routines are done in kernel
 ## How to use
 
 Simple docker:
+
 ```
 FS_ID='fs-aaa123' \
 docker run --rm --privileged --net=host --name=efs-${FS_ID} -v /mnt:/mnt:shared deadroot/docker-efs-mount ${FS_ID} /mnt/${FS_ID}
 ```
 
 RancherOS:
+
 ```
 #cloud-config
 rancher:

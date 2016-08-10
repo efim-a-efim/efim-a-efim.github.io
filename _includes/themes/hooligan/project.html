@@ -1,12 +1,18 @@
 <div class="page-header">
   <h1>
     {{ page.title }}
+      &nbsp;
+      <small>
       {% if page.sourcelink %}
-        <small>View&nbsp;<a href="{{ page.sourcelink }}">sources</a></small>
+        &nbsp;<a href="{{ page.sourcelink }}">source</a>&nbsp;
       {% endif %}
       {% if page.downloadlink %}
-        %nbsp;or&nbsp;<small><a href="{{ page.downloadlink }}">download</a></small>
+        &nbsp;<a href="{{ page.downloadlink }}">download</a>&nbsp;
       {% endif %}
+      {% if page.dockerhub %}
+        &nbsp;<a href="https://hub.docker.com/r/{{ page.dockerhub }}">docker</a>&nbsp;
+      {% endif %}
+      </small>
   </h1>
 </div>
 <div class="row">
