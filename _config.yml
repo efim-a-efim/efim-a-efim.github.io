@@ -12,10 +12,11 @@ title : Deadroot
 tagline: 'by Fimych aka deadroot'
 description: 'Thoughts, projects, remarks...'
 author :
-  name : 'Fimych'
+  name : 'Deadroot'
   email : deadroot@deadroot.info
   github : efim-a-efim
   linkedin : efimovay
+  dockerhub : deadroot
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
