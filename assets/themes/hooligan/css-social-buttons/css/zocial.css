@@ -143,6 +143,7 @@ a.zocial {
 .zocial.secondary,
 .zocial.viadeo,
 .zocial.weibo,
+.zocial.dockerhub,
 .zocial.wikipedia {
 	border: 1px solid #aaa;
 	border-color: rgba(0,0,0,0.3);
@@ -187,6 +188,8 @@ a.zocial {
 .zocial.twitter:focus,
 .zocial.viadeo:focus,
 .zocial.viadeo:hover,
+.zocial.dockerhub:focus,
+.zocial.dockerhub:hover,
 .zocial.weibo:focus,
 .zocial.weibo:hover,
 .zocial.wikipedia:focus,
@@ -216,6 +219,7 @@ a.zocial {
 .zocial.reddit:active,
 .zocial.secondary:active,
 .zocial.viadeo:active,
+.zocial.dockerhub:active,
 .zocial.weibo:active,
 .zocial.wikipedia:active {
 	background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0)), color-stop(30%, rgba(255,255,255,0)), color-stop(50%, rgba(0,0,0,0)), to(rgba(0,0,0,0.1)));
@@ -257,6 +261,7 @@ a.zocial {
 .zocial.flickr:before {content: "\E025";}
 .zocial.forrst:before {content: "\E019"; color: #50894f;}
 .zocial.foursquare:before {content: "\E013";}
+.zocial.dockerhub:before { content: "D";}
 .zocial.github:before {content: "\E046";}
 .zocial.gmail:before {content: "\E04C"; color: #f00;}
 .zocial.google:before {content: "\E026";}
@@ -343,6 +348,7 @@ a.zocial {
 .zocial.flickr {background-color: #ff0084;}
 .zocial.forrst {background-color: #1e360d;}
 .zocial.foursquare {background-color: #44a8e0;}
+.zocial.dockerhub {background-color: #22354c; color: #c4cdda;}
 .zocial.github {background-color: #fbfbfb; color: #050505;}
 .zocial.gmail {background-color: #efefef; color: #222;}
 .zocial.google {background-color: #4e6cf7;}
