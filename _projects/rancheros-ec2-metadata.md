@@ -9,7 +9,8 @@ dockerhub: deadroot/rancheros-ec2-metadata
 
 Intended to use with Autoscaling.
 - Adds AWS EC2 metadata to RancherOS environment
-- Adds instance tags (filtered) to Docker options
+- Adds instance tags to Docker labels
+- Adds instance tags to RancherOS environment according to options
 
 ## How to use
 
@@ -19,7 +20,7 @@ rancher:
   services:
     aws-metadata:
       image: deadroot/rancheros-ec2-metadata
-      command: -m -t 'com.' -l 'com.environment:ENVIRONMENT'
+      command: -m -t 'docker.' -l 'com.environment:ENVIRONMENT'
       privileged: true
       labels:
         io.rancher.os.after: network
@@ -29,7 +30,12 @@ rancher:
       volumes:
         - /usr/bin/ros:/bin/ros:ro
         - /var/lib/rancher/conf:/var/lib/rancher/conf:rw
+    console:
+      labels:
+        io.rancher.os.after: aws-metadata
 ```
+
+Please pay attention to the `console` service config. It redefines console to run after `aws-metadata` - this gurarntees that all metadata will be loaded *befire* Docker starts.
 
 ### Options:
 * `-m` - put AWS metadata to the Rancher environment vars. Metadata supported:
