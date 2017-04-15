@@ -153,14 +153,43 @@ V=( 'My=Data=123' 'Their=Data=123' )
 echo "${V[@]/%123/456}"
 ```
 
-Upper and lower case
-```bash
-V='the name'
-echo "${V^}"
-echo "${V^^}"
-echo "${V,}"
-echo "${V,,}"
+Upper and lower case:
 
-echo "${V^t}"
+```bash
+echo "${V^}" # First char upper case
+echo "${V^^}" # all chars
+echo "${V,}" # First lower
+echo "${V,,}" # all lower
+
+echo "${V^t}" # all previous commands may be used with pattern, it will be checked and only matching characters will be transformed
 ```
+
+# Get all variables matching prefix
+
+Yes, Bash can do it!
+
+```bash
+MY_A='foo'
+MY_B='bar'
+VAR2='baz'
+echo "${!MY_@}"
+# MY_A MY_B
+( IFS=',';  echo "${!MY_*}" )
+# MY_A,MY_B
+```
+
+# Regular expressions
+
+Bash support extended regexps in expressions:
+
+```bash
+[[ "--o=v" =~ ^\-\-[a-z]+= ]]
+echo $?
+# 0
+```
+
 # Functions and options
+
+## Fancy long options handling
+
+To handle long options, you can use this:
