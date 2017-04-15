@@ -110,3 +110,57 @@ echo "KIND=${KIND}"
 ```
 
 Here we use input redirection, which does not cause subprocess creation for `while`.
+
+## Some more tricks with variables
+
+```bash
+V='My=var=Data=123'
+```
+
+Cutting variable value without `cut`:
+```bash
+echo "${V#*=}" # Remove first occurence of template (after #) from the beginning of the string
+# var=Data=123
+echo "${V##*=}" # Remove all occurencies of template (after #) from the beginning of the string
+# 123
+echo "${V%=*}" # Same as # for string's end
+# My=var=Data
+echo "${V%%=*}" # Same as ## from strings end
+# My
+```
+
+Pattern substitutions
+```bash
+V='My=var=Data=123'
+echo "${V/=/,}"
+# My,var=Data=123
+echo "${V//=/,}"
+# My,var,Data,123
+echo "${V/#My/Their}" # Match at the beginning
+# Their=var=Data=123
+echo "${V/%123/456}" # Match at the beginning
+# My=var=Data=456
+echo "${V/%123}" # Remove pattern
+# My=var=Data=
+echo "${V/%=*}" # Wildcard!
+# My
+```
+
+Same with arrays:
+
+```bash
+V=( 'My=Data=123' 'Their=Data=123' )
+echo "${V[@]/%123/456}"
+```
+
+Upper and lower case
+```bash
+V='the name'
+echo "${V^}"
+echo "${V^^}"
+echo "${V,}"
+echo "${V,,}"
+
+echo "${V^t}"
+```
+# Functions and options
