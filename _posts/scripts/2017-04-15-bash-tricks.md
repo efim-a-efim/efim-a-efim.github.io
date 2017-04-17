@@ -222,3 +222,5 @@ After both option handlers you'll get:
 * `OPTIONS` associative array where indexes are option names and values are their values supplied
 * If option had no value supplied, it's treated as boolean and set to string `true`.
 * All arguments that are not handled, are in `$@`.
+
+I'd recommend to use first algorithm because it strictly defines arguments and options.
