@@ -53,7 +53,7 @@ Here you may use any variables that should be configured manually. For example, 
 
 RancherOS can take its config from EC2 instance's [user-data](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html). Here's my user-data sample that configures "generic" instance for Swarm cluster:
 
-<div style="text-shadow:none;"><script src="https://gist.github.com/{{ site.author.github }}/7e887cfb597a5a7fd7128afa623ff829.js"></script></div>
+{% include JB/gist gist_id="7e887cfb597a5a7fd7128afa623ff829" %}
 
 Here:
 

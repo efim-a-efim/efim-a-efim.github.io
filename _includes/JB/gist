@@ -4,6 +4,7 @@ Usage:
   1) include JB/gist
   2) specify the gist_id parameter (REQUIRED)
   3) specify the gist_file parameter (OPTIONAL)
+  You can specify site.author.github in _config.yml to point to GitHub user.
   example:
     <ul>
   	  {% include JB/gist gist_id="fdcfeaba4f33c172828d" %}
@@ -12,7 +13,7 @@ Usage:
 -->{% endcomment %}
 
 <div id="gist">
-<script src="https://gist.github.com/{{ include.gist_id }}.js{% if include.gist_file %}?file={{ include.gist_file }}{% endif %}"></script>
+<script src="https://gist.github.com/{% if site.author.github %}{{ site.author.github }}/{% endif %}{{ include.gist_id }}.js{% if include.gist_file %}?file={{ include.gist_file }}{% endif %}"></script>
 <noscript>
 <pre>https://gist.github.com/{{include.gist_id}}.js{% if include.gist_file %}?file={{include.gist_file}}{% endif %}</pre>
 </noscript>

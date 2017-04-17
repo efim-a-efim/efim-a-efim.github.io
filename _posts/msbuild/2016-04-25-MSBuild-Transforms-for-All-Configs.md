@@ -42,11 +42,11 @@ Now we need to add our transforms to project files and tell MSBuild that they ar
 
 Open your project(s) (`.csproj`, `.vbproj`, etc.) in text editor. Find your config file record, it looks like this:
 
-<div style="text-shadow:none;"><script src="https://gist.github.com/{{ site.author.github }}/817a4f67b54abea1df21410611286ce5.js?file=sample-config-entry.csproj"></script></div>
+{% include JB/gist gist_id="817a4f67b54abea1df21410611286ce5" gist_file="sample-config-entry.csproj" %}
 
 You should replace it with this:
 
-<div style="text-shadow:none;"><script src="https://gist.github.com/{{ site.author.github }}/817a4f67b54abea1df21410611286ce5.js?file=sample-config-entry-modified.csproj"></script></div>
+{% include JB/gist gist_id="817a4f67b54abea1df21410611286ce5" gist_file="sample-config-entry-modified.csproj" %}
 
 You see, we've set some additional properties. To be short: we made config file to copy to output folder after build and denied copying for transforms.
 
@@ -63,10 +63,10 @@ Here's a sample MSBuild XML that does the following:
 
 Place this XML in your project file, preferrably after PropertyGroup definitions in file's start.
 
-<div style="text-shadow:none;"><script src="https://gist.github.com/{{ site.author.github }}/817a4f67b54abea1df21410611286ce5.js?file=Transform-Application.csproj"></script></div>
+{% include JB/gist gist_id="817a4f67b54abea1df21410611286ce5" gist_file="Transform-Application.csproj" %}
 
 For Web projects, use the following:
 
-<div style="text-shadow:none;"><script src="https://gist.github.com/{{ site.author.github }}/817a4f67b54abea1df21410611286ce5.js?file=Transform-Web.csproj"></script></div>
+{% include JB/gist gist_id="817a4f67b54abea1df21410611286ce5" gist_file="Transform-Web.csproj" %}
 
 It has a side effect: while building, it replaces your `Web.config` files with transformed ones (though you can find original content in `Web.Base.config`). Originally, transforms run in MSBuild only when you publish the project and this problem doesn't appear. 

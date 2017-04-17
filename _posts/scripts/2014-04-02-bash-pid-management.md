@@ -32,4 +32,5 @@ Options:
 * `-p PID` - set PID to check/write
 * `-f FILE` - PID file name
 
-<div style="text-shadow:none;"><script src="https://gist.github.com/{{ site.author.github }}/9931232.js"> </script></div>
+{% include JB/gist gist_id="9931232" %}
+

@@ -26,6 +26,6 @@ So we've got a JS "builder" such as [Mimosa](http://mimosa.io/) that's used in y
 
 Here's an example that will run Mimosa on `Content` folder of the .NET project. After build completes, it will add all produced files to MSBuild `Content` item group, so MSBuild will know what to copy to output.
 
-<div style="text-shadow:none;"><script src="https://gist.github.com/{{ site.author.github }}/817a4f67b54abea1df21410611286ce5.js?file=JS-build.csproj"></script></div>
+{% include JB/gist gist_id="817a4f67b54abea1df21410611286ce5" gist_file="JS-build.csproj" %}
 
 You can use any build/convert tool here, it will work fine :)
