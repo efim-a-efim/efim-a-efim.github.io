@@ -30,6 +30,36 @@
   <p></p>
   <div class="span4">
     <section>
+      <div class="social nav visible-desktop">
+      Follow me on:&nbsp;
+        {% if site.author.github %}
+          <a href="https://github.com/{{ site.author.github }}" class="fa fa-github" target="_blank">
+            <span class="hidden-desktop">Github</span>
+          </a>
+          &nbsp;
+        {% endif %} {% if site.author.googleplus %}
+          <a href="https://plus.google.com/{{ site.author.googleplus }}" class="fa fa-google" target="_blank">
+            <span class="hidden-desktop">Google+</span>
+          </a>&nbsp;
+        {% endif %} {% if site.author.twitter %}
+          <a href="https://twitter.com/{{ site.author.twitter }}" class="fa fa-twitter" target="_blank">
+            <span class="hidden-desktop">Twitter</span>
+          </a>&nbsp;
+        {% endif %} {% if site.author.facebook %}
+          <a href="http://www.facebook.com/{{ site.author.facebook }}" class="fa fa-facebook" target="_blank">
+            <span class="hidden-desktop">Facebook</span>
+          </a>&nbsp;
+        {% endif %} {% if site.author.linkedin %}
+          <a href="http://www.linkedin.com/in/{{ site.author.linkedin }}" class="fa fa-linkedin" target="_blank">
+            <span class="hidden-desktop">LinkedIn</span>
+          </a>&nbsp;
+        {% endif %} {% if site.author.feedburner %}
+          <a href="http://feeds.feedburner.com/{{ site.author.feedburner }}" class="fa fa-feedburner" target="_blank">
+            <span class="hidden-desktop">FeedBurner</span>
+          </a>&nbsp;
+        {% endif %}
+        <br>
+      </div>
       <h4>Published</h4>
       <div class="date"><span>{{ page.date | date_to_long_string }}</span></div>
       {% if page.updated %}
