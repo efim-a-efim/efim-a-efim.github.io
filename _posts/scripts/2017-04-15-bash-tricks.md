@@ -188,8 +188,37 @@ echo $?
 # 0
 ```
 
-# Functions and options
+# Functions and arguments
 
-## Fancy long options handling
+## Fancy long arguments handling
 
-To handle long options, you can use this:
+To handle long options with option and value separated by `=`, like: `--start=100 --end=1000 --path=/data`:
+
+```bash
+local -A OPTIONS
+while [[ $# -gt 0 ]] && [[ "x${1:0:2}" =~ 'x--' ]]; do
+    local _opt="${1%%=*}"
+    OPTIONS["${_opt#--}"]="${1#*=}"
+    [[ "${OPTIONS["${_opt#--}"]}" == "${_opt}" ]] && OPTIONS["${_opt#--}"]='true'
+    shift
+done
+```
+
+For options separated by space:
+```bash
+local -A OPTIONS
+while [[ $# -gt 0 ]] && [[ "x${1:0:2}" =~ 'x--' ]]; do
+    if [[ -z "$2" ]] || [[ "x${2:0:2}" =~ 'x--' ]]; then
+        OPTIONS["${1#--}"]="true"
+        shift
+    else
+        OPTIONS["${1#--}"]="$2"
+        shift 2
+    fi
+done
+```
+
+After both option handlers you'll get:
+* `OPTIONS` associative array where indexes are option names and values are their values supplied
+* If option had no value supplied, it's treated as boolean and set to string `true`.
+* All arguments that are not handled, are in `$@`.
