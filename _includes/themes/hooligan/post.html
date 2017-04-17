@@ -68,28 +68,24 @@
       {% endif %}     
     </section>  
     {% unless page.group == 'navigation' %}
-        <div class="span4">
-            {% unless page.categories == empty %}
-            <section>
-                <h4>{% if page.categories.size == 1 %}Category{% else %}Categories{% endif %}</h4>
+		<section>
+        {% unless page.categories == empty %}
+			<h4>{% if page.categories.size == 1 %}Category{% else %}Categories{% endif %}</h4>
                 {% for category in page.categories %}
                 <span class="category">
                 {{ category }}
                 </span>
-                {% endfor %}
-            </section>
-            {% endunless %}     
-            {% unless page.tags == empty %}
-            <section>
-                <h4>Tags</h4>
-                <ul class="tag_box">
+            {% endfor %}
+        {% endunless %}     
+        {% unless page.tags == empty %}
+			<h4>Tags</h4>
+            <ul class="tag_box inline">
                 {% assign tags_list = page.tags %}
                 {% include JB/tags_list %}
-                </ul>
-            </section>
+            </ul>
             {% endunless %}         
-        </div>
     {% endunless %}
+	</section>
     <section>
         {% assign posts_collate = site.posts %}
         {% include JB/posts_collate %}

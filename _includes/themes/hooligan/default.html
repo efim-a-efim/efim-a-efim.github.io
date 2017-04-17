@@ -110,27 +110,25 @@
       </div> <!-- /container -->
       <div class="container">
             {% unless page.group == 'navigation' %}
+			<section>
             <div class="span4">
                 {% unless page.categories == empty %}
-                <section>
                     <h4>{% if page.categories.size == 1 %}Category{% else %}Categories{% endif %}</h4>
                     {% for category in page.categories %}
                     <span class="category">
                     {{ category }}
                     </span>
                     {% endfor %}
-                </section>
                 {% endunless %}     
                 {% unless page.tags == empty %}
-                <section>
                     <h4>Tags</h4>
-                    <ul class="tag_box">
+                    <ul class="tag_box inline">
                     {% assign tags_list = page.tags %}
                     {% include JB/tags_list %}
                     </ul>
-                </section>
                 {% endunless %}         
             </div>
+			</section>
             {% endunless %}
         </div>
       <div class="footer-push"></div>
