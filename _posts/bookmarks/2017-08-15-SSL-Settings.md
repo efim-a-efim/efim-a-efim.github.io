@@ -12,6 +12,8 @@ Some links to resources about SSL:
 
 * [Strong SSL Ciphers](https://cipherli.st/) including copy-and-paste config samples for most services
 * [Test SSL configuration and certificates](https://ssldecoder.org/)
+* Mozill Wiki: [TLS Config snippets](https://wiki.mozilla.org/Security/TLS_Configurations) (may be outdated) and [TLS Ciphers guide](https://wiki.mozilla.org/Security/Server_Side_TLS) (most modern)
+
 
 Articles on SSL setup:
 
