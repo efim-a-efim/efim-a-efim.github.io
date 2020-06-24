@@ -21,7 +21,7 @@ Use [S3 VPC endpoints](https://docs.amazonaws.cn/en_us/vpc/latest/userguide/vpc-
 Assume that you have several VPCs and running instances in them. You need to access your S3 buckets securely and without Internet traffic expenses, so you create S3 endpoints in all VPCs and configure route tables respectively.
 
 At some moment you set up an S3 website. It has DNS name in your private DNS zone, e.g. it's not resolvable from outside of your network. But website setup requires to give all clients access to read S3 objects:
-```
+```json
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -37,7 +37,7 @@ At some moment you set up an S3 website. It has DNS name in your private DNS zon
 
 To limit access preserving site functionality, add a Condition to your bucket policy statement(s) that will apply it only if the client comes through particular endpoints:
 
-```
+```json
 {
     "Version": "2012-10-17",
     "Statement": [
