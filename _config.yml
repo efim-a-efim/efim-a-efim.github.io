@@ -30,7 +30,7 @@ author :
 # Else if you are pushing to username.github.io, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-production_url : http://deadroot.info
+production_url : https://deadroot.info
 
 collections:
   projects:
@@ -114,7 +114,7 @@ JB :
     gauges :
         site_id : 'SITE ID'
     google : 
-        tracking_id : 'UA-123-12'
+        tracking_id : 'UA-170603377-1'
     getclicky :
       site_id : 
     mixpanel :
