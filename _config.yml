@@ -11,12 +11,12 @@ plugins:
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : Deadroot
-tagline: 'by Fimych aka deadroot'
+title : Fimych Blog
+tagline: 'by Fimych'
 description: 'Thoughts, projects, remarks...'
 author :
-  name : 'Deadroot'
-  email : deadroot@deadroot.info
+  name : 'Fimych'
+  email : efim@fimych.blog
   github : efim-a-efim
   twitter: efim_a_efim
   linkedin : efimovay
@@ -30,8 +30,7 @@ author :
 # Else if you are pushing to username.github.io, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-production_url : https://deadroot.info
-
+production_url : https://fimych.blog
 collections:
   projects:
     output: true
